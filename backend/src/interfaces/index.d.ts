@@ -147,4 +147,3 @@ export interface ICreateProject {
     description?: string;
     teamId: string;
 }
-//# sourceMappingURL=index.d.ts.map
