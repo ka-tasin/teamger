@@ -40,7 +40,6 @@ export interface ICreateTeamMember {
 export interface ITeam {
   id: string;
   name: string;
-  userId: string;
   createdAt: Date;
   updatedAt: Date;
   members?: ITeamMember[];
@@ -48,7 +47,6 @@ export interface ITeam {
 
 export interface ICreateTeam {
   name: string;
-  userId: string;
 }
 
 // Project Interfaces

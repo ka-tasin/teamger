@@ -15,7 +15,7 @@ export class ProjectService {
     }
 
     // Check if user is a member of the team
-    const isTeamMember = team.member.some(member => member.userId === userId);
+    const isTeamMember = team.members?.some(member => member.userId === userId);
     if (!isTeamMember) {
       throw new Error('You are not a member of this team');
     }
