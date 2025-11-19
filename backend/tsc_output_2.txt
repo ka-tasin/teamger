@@ -1,0 +1,31 @@
+prisma/index.ts(1,38): error TS2792: Cannot find module './generated/prisma'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+prisma/index.ts(25,11): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/app.ts(1,8): error TS1259: Module '"D:/personal/projects/smart-task-manager/backend/node_modules/@types/express/index"' can only be default-imported using the 'allowSyntheticDefaultImports' flag
+src/app.ts(2,8): error TS1259: Module '"D:/personal/projects/smart-task-manager/backend/node_modules/@types/cors/index"' can only be default-imported using the 'allowSyntheticDefaultImports' flag
+src/app.ts(3,20): error TS2792: Cannot find module 'helmet'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/app.ts(4,20): error TS2792: Cannot find module 'dotenv'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/app.ts(45,19): error TS7006: Parameter 'req' implicitly has an 'any' type.
+src/app.ts(45,24): error TS7006: Parameter 'res' implicitly has an 'any' type.
+src/app.ts(45,29): error TS7006: Parameter 'next' implicitly has an 'any' type.
+src/app.ts(53,30): error TS7006: Parameter 'req' implicitly has an 'any' type.
+src/app.ts(53,35): error TS7006: Parameter 'res' implicitly has an 'any' type.
+src/controllers/task.controller.ts(3,47): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/controllers/team.controller.ts(4,53): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/controllers/user.controller.ts(4,46): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/activity.repository.ts(3,35): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/BaseRepository.ts(1,20): error TS2792: Cannot find module '../../prisma'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/BaseRepository.ts(2,30): error TS2792: Cannot find module '../../prisma/generated/prisma'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/project.repository.ts(3,47): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/task.repository.ts(3,54): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/team.repository.ts(3,41): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/teamMember.repository.ts(3,53): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/repositories/user.repository.ts(3,41): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/server.ts(1,20): error TS2792: Cannot find module 'dotenv'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/services/dashboard.services.ts(6,38): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/services/project.services.ts(4,47): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/services/project.services.ts(18,43): error TS7006: Parameter 'member' implicitly has an 'any' type.
+src/services/task.services.ts(12,8): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/services/task.services.ts(101,20): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Low: number; Medium: number; High: number; }'.
+src/services/task.services.ts(101,48): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Low: number; Medium: number; High: number; }'.
+src/services/team.services.ts(6,73): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+src/services/user.services.ts(5,53): error TS2792: Cannot find module '../interfaces'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?

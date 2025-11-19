@@ -1,12 +1,12 @@
 
 import { BaseRepository } from './BaseRepository';
-import type { IActivityLog } from '../interfaces';
+import type { IActivityLog } from '../interfaces/index';
 
 export class ActivityRepository extends BaseRepository<IActivityLog> {
   async create(activityData: Omit<IActivityLog, 'id' | 'createdAt'>): Promise<IActivityLog> {
     try {
-      return await this.prisma.activityLog.create({ 
-        data: activityData 
+      return await this.prisma.activityLog.create({
+        data: activityData
       });
     } catch (error) {
       return this.handleError(error, 'create');

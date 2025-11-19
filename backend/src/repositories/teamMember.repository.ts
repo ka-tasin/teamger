@@ -1,12 +1,12 @@
 
 import { BaseRepository } from './BaseRepository';
-import type { ITeamMember, ICreateTeamMember } from '../interfaces';
+import type { ITeamMember, ICreateTeamMember } from '../interfaces/index';
 
 export class TeamMemberRepository extends BaseRepository<ITeamMember> {
   async create(memberData: ICreateTeamMember): Promise<ITeamMember> {
     try {
-      return await this.prisma.teamMember.create({ 
-        data: memberData 
+      return await this.prisma.teamMember.create({
+        data: memberData
       });
     } catch (error) {
       return this.handleError(error, 'create');

@@ -1,5 +1,5 @@
-import prisma from '../../../prisma';
-import { PrismaClient } from './generated/prisma';
+import prisma from '../../prisma';
+import { PrismaClient } from '../../prisma/generated/prisma';
 
 export abstract class BaseRepository<T> {
   protected prisma: PrismaClient;

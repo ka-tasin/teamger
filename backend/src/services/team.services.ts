@@ -3,7 +3,7 @@ import { TeamRepository } from '../repositories/team.repository';
 import { TeamMemberRepository } from '../repositories/teamMember.repository';
 import { ProjectRepository } from '../repositories/project.repository';
 import { ActivityRepository } from '../repositories/activity.repository';
-import type { ITeam, ICreateTeam, ICreateTeamMember, ITeamMember } from '../interfaces';
+import type { ITeam, ICreateTeam, ICreateTeamMember, ITeamMember } from '../interfaces/index';
 
 export class TeamService {
   private teamRepository = new TeamRepository();
@@ -16,7 +16,7 @@ export class TeamService {
 
     // Add the creator as a team member
     await this.teamMemberRepository.create({
-      name: 'Team Lead', 
+      name: 'Team Lead',
       role: 'Team Lead',
       capacity: 5,
       teamId: team.id,
@@ -26,9 +26,9 @@ export class TeamService {
     // Log activity
     await this.activityRepository.create({
       action: 'TEAM_CREATED',
-      details: { 
-        teamId: team.id, 
-        teamName: team.name 
+      details: {
+        teamId: team.id,
+        teamName: team.name
       },
       userId
     });
@@ -47,7 +47,7 @@ export class TeamService {
     // Log activity
     await this.activityRepository.create({
       action: 'TEAM_MEMBER_ADDED',
-      details: { 
+      details: {
         teamId: memberData.teamId,
         teamName: team.name,
         memberName: memberData.name,

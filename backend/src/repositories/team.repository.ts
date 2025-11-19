@@ -1,12 +1,12 @@
 
 import { BaseRepository } from './BaseRepository';
-import type { ITeam, ICreateTeam } from '../interfaces';
+import type { ITeam, ICreateTeam } from '../interfaces/index';
 
 export class TeamRepository extends BaseRepository<ITeam> {
   async create(teamData: ICreateTeam): Promise<ITeam> {
     try {
-      return await this.prisma.team.create({ 
-        data: teamData 
+      return await this.prisma.team.create({
+        data: teamData
       });
     } catch (error) {
       return this.handleError(error, 'create');
@@ -15,7 +15,7 @@ export class TeamRepository extends BaseRepository<ITeam> {
 
   async findById(id: string): Promise<ITeam | null> {
     try {
-      return await this.prisma.team.findUnique({ 
+      return await this.prisma.team.findUnique({
         where: { id },
         include: {
           members: true,

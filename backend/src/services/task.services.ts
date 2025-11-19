@@ -9,7 +9,7 @@ import type {
   IUpdateTask, 
   IReassignmentResult,
   ITeamMemberSummary 
-} from '../interfaces';
+} from '../interfaces/index';
 
 export class TaskService {
   private taskRepository = new TaskRepository();

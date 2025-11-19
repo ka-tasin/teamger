@@ -1,12 +1,12 @@
 
 import { BaseRepository } from './BaseRepository';
-import type { IProject, ICreateProject } from '../interfaces';
+import type { IProject, ICreateProject } from '../interfaces/index';
 
 export class ProjectRepository extends BaseRepository<IProject> {
   async create(projectData: ICreateProject): Promise<IProject> {
     try {
-      return await this.prisma.project.create({ 
-        data: projectData 
+      return await this.prisma.project.create({
+        data: projectData
       });
     } catch (error) {
       return this.handleError(error, 'create');

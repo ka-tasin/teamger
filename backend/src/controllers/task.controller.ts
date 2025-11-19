@@ -1,91 +1,153 @@
 import type { Request, Response } from 'express';
-import { TaskService } from '../services/task.service';
+import { TaskService } from '../services/task.services';
+import type { ICreateTask, IUpdateTask } from '../interfaces/index';
 
 export class TaskController {
-  private taskService: TaskService;
+  private taskService = new TaskService();
 
-  constructor() {
-    this.taskService = new TaskService();
+  async createTask(req: Request, res: Response) {
+    try {
+      const taskData: ICreateTask = req.body;
+      const userId = (req as any).user.userId;
+
+      const task = await this.taskService.createTask(taskData, userId);
+
+      res.status(201).json({
+        success: true,
+        data: task
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to create task'
+      });
+    }
   }
 
-  createTask = async (req: Request, res: Response) => {
+  async updateTask(req: Request, res: Response) {
     try {
-      const task = await this.taskService.createTask(req.body, req.user.userId);
-      res.status(201).json(task);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const { id } = req.params;
+      const taskData: IUpdateTask = req.body;
+      const userId = (req as any).user.userId;
 
-  getTaskById = async (req: Request, res: Response) => {
-    try {
-      const task = await this.taskService.getTaskById(req.params.id);
-      res.status(200).json(task);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
-    }
-  };
 
-  getTasksByProject = async (req: Request, res: Response) => {
-    try {
-      const tasks = await this.taskService.getTasksByProject(req.params.projectId);
-      res.status(200).json(tasks);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      if (!id) {
+        res.status(400).json({
+          success: false,
+          error: 'Task ID is required'
+        });
+        return;
+      }
 
-  getTasksByMember = async (req: Request, res: Response) => {
-    try {
-      const tasks = await this.taskService.getTasksByMember(req.params.memberId);
-      res.status(200).json(tasks);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const task = await this.taskService.updateTask(id, taskData, userId);
 
-  updateTask = async (req: Request, res: Response) => {
-    try {
-      const task = await this.taskService.updateTask(req.params.id, req.body, req.user.userId);
-      res.status(200).json(task);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.json({
+        success: true,
+        data: task
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to update task'
+      });
     }
-  };
+  }
 
-  deleteTask = async (req: Request, res: Response) => {
+  async getTasks(req: Request, res: Response) {
     try {
-      await this.taskService.deleteTask(req.params.id);
-      res.status(204).send();
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const filters = req.query;
+      const tasks = await this.taskService.getTasks(filters);
 
-  autoAssignTask = async (req: Request, res: Response) => {
-    try {
-      const member = await this.taskService.autoAssignTask(req.body.projectId, req.user.userId);
-      res.status(200).json(member);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.json({
+        success: true,
+        data: tasks
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to get tasks'
+      });
     }
-  };
+  }
 
-  reassignTasks = async (req: Request, res: Response) => {
+  async deleteTask(req: Request, res: Response) {
     try {
-      const result = await this.taskService.reassignTasks(req.user.userId);
-      res.status(200).json(result);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const { id } = req.params;
+      const userId = (req as any).user.userId;
 
-  getDashboard = async (req: Request, res: Response) => {
-    try {
-      const stats = await this.taskService.getDashboardStats(req.user.userId);
-      res.status(200).json(stats);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+
+      if (!id) {
+        res.status(400).json({
+          success: false,
+          error: 'Task ID is required'
+        });
+        return;
+      }
+
+      await this.taskService.deleteTask(id, userId);
+
+      res.json({
+        success: true,
+        message: 'Task deleted successfully'
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to delete task'
+      });
     }
-  };
+  }
+
+  async reassignTasks(req: Request, res: Response) {
+    try {
+      const { teamId } = req.params;
+      const userId = (req as any).user.userId;
+
+
+      if (!teamId) {
+        res.status(400).json({
+          success: false,
+          error: 'Task ID is required'
+        });
+        return;
+      }
+
+      const result = await this.taskService.reassignTasks(teamId, userId);
+
+      res.json({
+        success: true,
+        data: result
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to reassign tasks'
+      });
+    }
+  }
+
+  async getTeamMemberSummary(req: Request, res: Response) {
+    try {
+      const { teamId } = req.params;
+
+      if (!teamId) {
+        res.status(400).json({
+          success: false,
+          error: 'Task ID is required'
+        });
+        return;
+      }
+      const summary = await this.taskService.getTeamMemberSummary(teamId);
+
+      res.json({
+        success: true,
+        data: summary
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to get team summary'
+      });
+    }
+  }
 }

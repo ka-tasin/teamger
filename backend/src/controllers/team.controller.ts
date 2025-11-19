@@ -1,100 +1,95 @@
+
 import type { Request, Response } from 'express';
-import { TeamService } from '../services/team.service';
+import { TeamService } from '../services/team.services';
+import type { ICreateTeam, ICreateTeamMember } from '../interfaces/index';
 
 export class TeamController {
-  private teamService: TeamService;
+  private teamService = new TeamService();
 
-  constructor() {
-    this.teamService = new TeamService();
+  async createTeam(req: Request, res: Response) {
+    try {
+      const teamData: ICreateTeam = req.body;
+      const userId = (req as any).user.userId;
+
+      const team = await this.teamService.createTeam(teamData, userId);
+
+      res.status(201).json({
+        success: true,
+        data: team
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to create team'
+      });
+    }
   }
 
-  createTeam = async (req: Request, res: Response) => {
+  async addTeamMember(req: Request, res: Response) {
     try {
-      const team = await this.teamService.createTeam(req.body, req.user.userId);
-      res.status(201).json(team);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const memberData: ICreateTeamMember = req.body;
+      const userId = (req as any).user.userId;
 
-  getTeams = async (req: Request, res: Response) => {
-    try {
-      const teams = await this.teamService.getTeamsByOwner(req.user.userId);
-      res.status(200).json(teams);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const member = await this.teamService.addTeamMember(memberData, userId);
 
-  getTeamById = async (req: Request, res: Response) => {
-    try {
-      const team = await this.teamService.getTeamById(req.params.id);
-      res.status(200).json(team);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
+      res.status(201).json({
+        success: true,
+        data: member
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to add team member'
+      });
     }
-  };
+  }
 
-  updateTeam = async (req: Request, res: Response) => {
+  async getUserTeams(req: Request, res: Response) {
     try {
-      const team = await this.teamService.updateTeam(req.params.id, req.body);
-      res.status(200).json(team);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const userId = (req as any).user.userId;
+      const teams = await this.teamService.getUserTeams(userId);
 
-  deleteTeam = async (req: Request, res: Response) => {
-    try {
-      await this.teamService.deleteTeam(req.params.id);
-      res.status(204).send();
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.json({
+        success: true,
+        data: teams
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to get teams'
+      });
     }
-  };
+  }
 
-  addTeamMember = async (req: Request, res: Response) => {
+  async getTeamDetails(req: Request, res: Response) {
     try {
-      const member = await this.teamService.addTeamMember(req.body);
-      res.status(201).json(member);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      const { id } = req.params;
 
-  getTeamMembers = async (req: Request, res: Response) => {
-    try {
-      const members = await this.teamService.getTeamMembers(req.params.teamId);
-      res.status(200).json(members);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      if (!id) {
+        res.status(400).json({
+          success: false,
+          error: 'Task ID is required'
+        });
+        return;
+      }
+      const team = await this.teamService.getTeamWithDetails(id);
 
-  updateTeamMember = async (req: Request, res: Response) => {
-    try {
-      const member = await this.teamService.updateTeamMember(req.params.id, req.body);
-      res.status(200).json(member);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+      if (!team) {
+        return res.status(404).json({
+          success: false,
+          error: 'Team not found'
+        });
+      }
 
-  deleteTeamMember = async (req: Request, res: Response) => {
-    try {
-      await this.teamService.deleteTeamMember(req.params.id);
-      res.status(204).send();
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.json({
+        success: true,
+        data: team
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to get team details'
+      });
     }
-  };
-
-  getMemberWorkload = async (req: Request, res: Response) => {
-    try {
-      const workload = await this.teamService.getMemberWorkload(req.params.id);
-      res.status(200).json(workload);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
-    }
-  };
+  }
 }

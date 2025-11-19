@@ -1,12 +1,12 @@
 
 import { BaseRepository } from './BaseRepository';
-import type { ITask, ICreateTask, IUpdateTask } from '../interfaces';
+import type { ITask, ICreateTask, IUpdateTask } from '../interfaces/index';
 
 export class TaskRepository extends BaseRepository<ITask> {
   async create(taskData: ICreateTask): Promise<ITask> {
     try {
-      return await this.prisma.task.create({ 
-        data: taskData 
+      return await this.prisma.task.create({
+        data: taskData
       });
     } catch (error) {
       return this.handleError(error, 'create');
@@ -109,7 +109,7 @@ export class TaskRepository extends BaseRepository<ITask> {
   }): Promise<ITask[]> {
     try {
       const where: any = {};
-      
+
       if (filters.projectId) where.projectId = filters.projectId;
       if (filters.assignedTo) where.assignedTo = filters.assignedTo;
       if (filters.status) where.status = filters.status;

@@ -4,7 +4,7 @@ export interface IUser {
   name: string;
   createdAt: Date;
   updatedAt: Date;
-  password?: string; 
+  password?: string;
 }
 
 export interface ICreateUser {
@@ -16,19 +16,6 @@ export interface ICreateUser {
 export interface ILoginUser {
   email: string;
   password: string;
-}
-
-// Team Interfaces
-export interface ITeam {
-  id: string;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface ICreateTeam {
-  name: string;
-  userId: string;
 }
 
 export interface ITeamMember {
@@ -50,6 +37,14 @@ export interface ICreateTeamMember {
   userId?: string;
 }
 
+export interface ITeam {
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Project Interfaces
 export interface IProject {
   id: string;
@@ -59,6 +54,8 @@ export interface IProject {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
+  tasks?: ITask[];
+  team?: ITeam;
 }
 
 export interface ICreateProject {
