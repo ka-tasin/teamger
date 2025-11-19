@@ -4,6 +4,7 @@ export interface IUser {
   name: string;
   createdAt: Date;
   updatedAt: Date;
+  password?: string; 
 }
 
 export interface ICreateUser {
